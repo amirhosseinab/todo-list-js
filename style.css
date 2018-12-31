@@ -85,3 +85,7 @@ li.item-done {
 li.item-done span {
     text-decoration: line-through;
 }
+
+.task-text {
+    border-radius: 5px;
+}

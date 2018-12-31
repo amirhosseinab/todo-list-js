@@ -7,7 +7,7 @@
     addButton.onclick = addItem;
     todoText.onkeypress = function (e) {
         if (e.key === 'Enter') {
-            addItem()
+            addItem();
         }
     };
 
@@ -16,23 +16,6 @@
         todos.push({text: todoText.value, done: false, editMode: false});
         todoText.value = "";
         refreshTodos();
-    }
-
-    function createTodoItem(todo, index) {
-        let item = document.createElement("li");
-        let text = document.createElement("span");
-        let btnContainer = createButtons(index);
-
-        if (todo.done) {
-            item.setAttribute("class", "item-done");
-        }
-
-
-        text.innerText = todo.text;
-
-        item.appendChild(text);
-        item.appendChild(btnContainer);
-        return item;
     }
 
     function createButtons(itemIndex) {
@@ -74,7 +57,33 @@
 
         todos.forEach((todo, index) => {
             todoList.appendChild(createTodoItem(todo, index))
-        })
+        });
     }
+
+    function createTodoItem(todo, index) {
+        let item = document.createElement("li");
+        let text = document.createElement("input");
+        let btnContainer = createButtons(index);
+        
+        makeEdit = () => {
+            todo.text = text.value;
+        }
+
+        text.setAttribute("class", "task-text");
+        if (todo.done) {
+            item.setAttribute("class", "item-done");
+        }
+        
+        if(todo.editMode) {
+            text.setAttribute('contenteditable', 'true');
+            text.setAttribute('onchange', 'makeEdit()');
+        }
+        
+        text.value = todo.text;
+        item.appendChild(text);
+        item.appendChild(btnContainer);
+        return item;
+    }
+
 }();
 
