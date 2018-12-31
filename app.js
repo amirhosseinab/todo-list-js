@@ -65,10 +65,7 @@
         let text = document.createElement("input");
         let btnContainer = createButtons(index);
         
-        makeEdit = () => {
-            todo.text = text.value;
-        }
-
+        text.onchange = makeTextEdit;
         text.setAttribute("class", "task-text");
         if (todo.done) {
             item.setAttribute("class", "item-done");
@@ -76,13 +73,17 @@
         
         if(todo.editMode) {
             text.setAttribute('contenteditable', 'true');
-            text.setAttribute('onchange', 'makeEdit()');
         }
         
         text.value = todo.text;
         item.appendChild(text);
         item.appendChild(btnContainer);
         return item;
+
+        function makeTextEdit() {
+            todo.text = text.value;
+        }
+
     }
 
 }();
